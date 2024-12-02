@@ -40,4 +40,19 @@ def calculate_and_display_average_price(data):
             average_price = closing_prices.mean()
             print(f"Средняя цена закрытия акций за период: {average_price}")
         else:
-            print("Информация о дате отсутствует или не имеет распознаваемого формата.")        
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+
+
+def notify_if_strong_fluctuations(data, threshold=2.0):
+    '''
+    Отправляет уведомление, если разница между максимальным и минимальным значениями цены закрытия превышает порог.
+    '''
+    if 'Date' not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            closing_prices = data.Close.values
+            max_price = closing_prices.max()
+            min_price = closing_prices.min()
+            if max_price - min_price > threshold:
+                print(f"Внимание! Разница между максимальным и минимальным значениями цены закрытия превышает порог {threshold}.")
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
