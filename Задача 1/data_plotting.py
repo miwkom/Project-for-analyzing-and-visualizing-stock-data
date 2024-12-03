@@ -56,3 +56,11 @@ def notify_if_strong_fluctuations(data, threshold=2.0):
                 print(f"Внимание! Разница между максимальным и минимальным значениями цены закрытия превышает порог {threshold}.")
         else:
             print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+
+
+def export_data_to_csv(data, filename='stock_data.csv'):
+    '''
+    Экспортирует данные в CSV-файл.
+    '''
+    data.to_csv(filename, index=False)
+    print(f"Данные экспортированы в файл {filename}")
