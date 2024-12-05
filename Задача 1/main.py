@@ -9,8 +9,11 @@ def main():
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc): ")
     period = input("Введите период для данных (например, '1mo' для одного месяца): ")
+    rsi_confirmation = input("Нужно рассчитать индикатор RSI? (Y/N): ")
+    macd_confirmation = input("Нужно рассчитать индикатор MACD? (Y/N): ")
     threshold = float(input("Введите порог для оповещения о сильных изменениях цены (например, 2.0): "))
-    filename = input("Введите имя файла для экспорта данных в CSV (например, 'stock_data.csv'): ")
+    filename_csv = input(f"Введите имя файла для экспорта данных в CSV (например, '{ticker}_data'): ")
+
 
     # Fetch stock data
     stock_data = dd.fetch_stock_data(ticker, period)
@@ -21,11 +24,21 @@ def main():
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 
+    if rsi_confirmation == 'Y':
+        dplt.create_and_save_rsi_plot(stock_data, ticker, period)
+    else:
+        print("Индикатор RSI не будет рассчитан.")
+
+    if macd_confirmation == 'Y':
+        dplt.create_and_save_macd_plot(stock_data, ticker, period)
+    else:
+        print("Индикатор MACD не будет рассчитан.")
+
     dplt.calculate_and_display_average_price(stock_data)
 
     dplt.notify_if_strong_fluctuations(stock_data, threshold)
 
-    dplt.export_data_to_csv(stock_data, filename)
+    dplt.export_data_to_csv(stock_data, filename_csv)
 
 
 if __name__ == "__main__":
