@@ -34,7 +34,7 @@ def create_and_save_plot(data, ticker, period, start_date, end_date, filename=No
     print(f"График сохранен как {filename}")
 
 
-def create_and_save_rsi_plot(data, ticker, period, filename=None):
+def create_and_save_rsi_plot(data, ticker, period, start_date, end_date, filename=None):
     """
     Строит график индекса Relative Strength Index (RSI) за 14 дней.
     """
@@ -56,13 +56,16 @@ def create_and_save_rsi_plot(data, ticker, period, filename=None):
     plt.legend()
 
     if filename is None:
-        filename = f"{ticker}_{period}_RSI.png"
+        if period is None:
+            filename = f"{ticker}_{start_date.date()}_{end_date.date()}_RSI.png"
+        else:
+            filename = f"{ticker}_{period}_RSI.png"
 
     plt.savefig(filename)
     print(f"Индикатор RSI за 14 дней сохранен как {filename}")
 
 
-def create_and_save_macd_plot(data, ticker, period,filename=None):
+def create_and_save_macd_plot(data, ticker, period, start_date, end_date, filename=None):
     """
     Строит график индекса Moving Average Convergence Divergence (MACD).
     """
@@ -85,7 +88,10 @@ def create_and_save_macd_plot(data, ticker, period,filename=None):
     plt.legend()
 
     if filename is None:
-        filename = f"{ticker}_{period}_MACD.png"
+        if period is None:
+            filename = f"{ticker}_{start_date.date()}_{end_date.date()}_MACD.png"
+        else:
+            filename = f"{ticker}_{period}_MACD.png"
 
     plt.savefig(filename)
     print(f"Индикатор MACD сохранен как {filename}")
