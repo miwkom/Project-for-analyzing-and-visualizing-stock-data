@@ -1,5 +1,6 @@
 import data_download as dd
 import data_plotting as dplt
+from datetime import datetime
 
 
 def main():
@@ -8,29 +9,39 @@ def main():
     print("Общие периоды времени для данных о запасах включают: 1д, 5д, 1мес, 3мес, 6мес, 1г, 2г, 5г, 10л, с начала года, макс.")
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc): ")
-    period = input("Введите период для данных (например, '1mo' для одного месяца): ")
+    period = input("Введите период для данных (например, '1mo' для одного месяца); если требуются конкретные даты, оставьте это поле пустым: ")
+
+    if period == '':
+        start_date = input("Введите дату начала в формате YYYY-MM-DD (например, '2022-01-01'): ")
+        end_date = input("Введите дату окончания в формате YYYY-MM-DD (например, '2022-12-31'): ")
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        period = None
+    else:
+        start_date = None
+        end_date = None
+
     rsi_confirmation = input("Нужно рассчитать индикатор RSI? (Y/N): ")
     macd_confirmation = input("Нужно рассчитать индикатор MACD? (Y/N): ")
     threshold = float(input("Введите порог для оповещения о сильных изменениях цены (например, 2.0): "))
     filename_csv = input(f"Введите имя файла для экспорта данных в CSV (например, '{ticker}_data'): ")
 
-
     # Fetch stock data
-    stock_data = dd.fetch_stock_data(ticker, period)
+    stock_data = dd.fetch_stock_data(ticker, period, start_date, end_date)
 
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
 
     # Plot the data
-    dplt.create_and_save_plot(stock_data, ticker, period)
+    dplt.create_and_save_plot(stock_data, ticker, period, start_date, end_date)
 
     if rsi_confirmation == 'Y':
-        dplt.create_and_save_rsi_plot(stock_data, ticker, period)
+        dplt.create_and_save_rsi_plot(stock_data, ticker, period, start_date, end_date)
     else:
         print("Индикатор RSI не будет рассчитан.")
 
     if macd_confirmation == 'Y':
-        dplt.create_and_save_macd_plot(stock_data, ticker, period)
+        dplt.create_and_save_macd_plot(stock_data, ticker, period, start_date, end_date)
     else:
         print("Индикатор MACD не будет рассчитан.")
 

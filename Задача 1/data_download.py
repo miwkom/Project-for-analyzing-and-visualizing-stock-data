@@ -1,9 +1,8 @@
 import yfinance as yf
 
 
-def fetch_stock_data(ticker, period='1mo'):
-    stock = yf.Ticker(ticker)
-    data = stock.history(period=period)
+def fetch_stock_data(ticker, period=None, start_date=None, end_date=None):
+    data = yf.download(ticker, period=period, start=start_date, end=end_date)
     return data
 
 
