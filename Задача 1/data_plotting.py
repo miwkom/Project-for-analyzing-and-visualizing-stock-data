@@ -2,8 +2,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def create_and_save_plot(data, ticker, period, start_date, end_date, filename=None):
+def create_and_save_plot(data, style, ticker, period, start_date, end_date, filename=None):
     plt.figure(figsize=(10, 6))
+    plt.style.use(style)
 
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
@@ -34,11 +35,12 @@ def create_and_save_plot(data, ticker, period, start_date, end_date, filename=No
     print(f"График сохранен как {filename}")
 
 
-def create_and_save_rsi_plot(data, ticker, period, start_date, end_date, filename=None):
+def create_and_save_rsi_plot(data, style, ticker, period, start_date, end_date, filename=None):
     """
     Строит график индекса Relative Strength Index (RSI) за 14 дней.
     """
     plt.figure(figsize=(10, 6))
+    plt.style.use(style)
 
     rsi = calculate_rsi(data)
 
@@ -65,11 +67,12 @@ def create_and_save_rsi_plot(data, ticker, period, start_date, end_date, filenam
     print(f"Индикатор RSI за 14 дней сохранен как {filename}")
 
 
-def create_and_save_macd_plot(data, ticker, period, start_date, end_date, filename=None):
+def create_and_save_macd_plot(data, style, ticker, period, start_date, end_date, filename=None):
     """
     Строит график индекса Moving Average Convergence Divergence (MACD).
     """
     plt.figure(figsize=(10, 6))
+    plt.style.use(style)
 
     macd, signal = calculate_macd(data)
 

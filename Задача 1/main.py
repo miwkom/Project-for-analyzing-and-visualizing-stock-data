@@ -21,6 +21,7 @@ def main():
         start_date = None
         end_date = None
 
+    style = change_of_style()
     rsi_confirmation = input("Нужно рассчитать индикатор RSI? (Y/N): ")
     macd_confirmation = input("Нужно рассчитать индикатор MACD? (Y/N): ")
     threshold = float(input("Введите порог для оповещения о сильных изменениях цены (например, 2.0): "))
@@ -33,15 +34,15 @@ def main():
     stock_data = dd.add_moving_average(stock_data)
 
     # Plot the data
-    dplt.create_and_save_plot(stock_data, ticker, period, start_date, end_date)
+    dplt.create_and_save_plot(stock_data, style, ticker, period, start_date, end_date)
 
-    if rsi_confirmation == 'Y':
-        dplt.create_and_save_rsi_plot(stock_data, ticker, period, start_date, end_date)
+    if rsi_confirmation.lower() == 'y':
+        dplt.create_and_save_rsi_plot(stock_data, style, ticker, period, start_date, end_date)
     else:
         print("Индикатор RSI не будет рассчитан.")
 
-    if macd_confirmation == 'Y':
-        dplt.create_and_save_macd_plot(stock_data, ticker, period, start_date, end_date)
+    if macd_confirmation.lower() == 'y':
+        dplt.create_and_save_macd_plot(stock_data, style, ticker, period, start_date, end_date)
     else:
         print("Индикатор MACD не будет рассчитан.")
 
@@ -50,6 +51,36 @@ def main():
     dplt.notify_if_strong_fluctuations(stock_data, threshold)
 
     dplt.export_data_to_csv(stock_data, filename_csv)
+
+
+def change_of_style():
+    """
+    Изменение стиля графиков в matplotlib
+    """
+    style_list = ['Solarize_Light2', '_classic_test_patch', '_mpl-gallery', '_mpl-gallery-nogrid', 'bmh', 'classic',
+     'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn-v0_8', 'seaborn-v0_8-bright',
+     'seaborn-v0_8-colorblind', 'seaborn-v0_8-dark', 'seaborn-v0_8-dark-palette', 'seaborn-v0_8-darkgrid',
+     'seaborn-v0_8-deep', 'seaborn-v0_8-muted', 'seaborn-v0_8-notebook', 'seaborn-v0_8-paper', 'seaborn-v0_8-pastel',
+     'seaborn-v0_8-poster', 'seaborn-v0_8-talk', 'seaborn-v0_8-ticks', 'seaborn-v0_8-white', 'seaborn-v0_8-whitegrid',
+     'tableau-colorblind10']
+
+    while True:
+        style = input(
+            'Введите название стиля (для вызова полного списка введите "all"). '
+            'Оставьте поле пустым для использования стандартного стиля: ')
+
+        if style in style_list:
+            print(f'Изменение стиля на {style}')
+            return style
+        elif style == '':
+            print('Используется стиль по умолчанию.')
+            return 'classic'
+        elif style.lower() == 'all':
+            print('Список доступных стилей:')
+            for style_name in style_list:
+                print(style_name)
+        else:
+            print('Неизвестный стиль. Пожалуйста, попробуйте еще раз.')
 
 
 if __name__ == "__main__":
