@@ -162,3 +162,16 @@ def calculate_macd(data, fast_period=12, slow_period=26, signal_period=9):
     macd = fast - slow
     signal = macd.ewm(span=signal_period, adjust=False, min_periods=signal_period).mean()
     return macd, signal
+
+
+def calculate_and_display_std_dev(data):
+    """
+    Рассчитывает и отображает стандартное отклонение цен закрытия.
+    """
+    if 'Date' not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            closing_prices = data.Close.values
+            std_dev = closing_prices.std()
+            print(f"Стандартное отклонение цены закрытия акций за период: {std_dev}")
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")

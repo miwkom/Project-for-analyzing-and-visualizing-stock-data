@@ -46,6 +46,8 @@ def main():
     else:
         print("Индикатор MACD не будет рассчитан.")
 
+    dplt.calculate_and_display_std_dev(stock_data)
+
     dplt.calculate_and_display_average_price(stock_data)
 
     dplt.notify_if_strong_fluctuations(stock_data, threshold)
