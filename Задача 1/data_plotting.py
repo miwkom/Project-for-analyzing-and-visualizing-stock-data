@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.express as px
 
 
 def create_and_save_plot(data, style, ticker, period, start_date, end_date, filename=None):
@@ -33,6 +34,46 @@ def create_and_save_plot(data, style, ticker, period, start_date, end_date, file
 
     plt.savefig(filename)
     print(f"График сохранен как {filename}")
+
+
+def create_and_save_interactive_plot(data, ticker, period, start_date, end_date, filename=None):
+    """
+    Строит интерактивный график цены акций с течением времени.
+    """
+    if 'Date' not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            dates = data.index.to_numpy()
+            dp = pd.DataFrame(data['Close'])
+            fig = px.line(dp, x=dates, y=f'{ticker}',
+                          labels={'x':'Дата',
+                                  f'{ticker}':'Цена'})
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+            return
+    else:
+        if not pd.api.types.is_datetime64_any_dtype(data['Date']):
+            data['Date'] = pd.to_datetime(data['Date'])
+        dp = pd.DataFrame(data['Close', 'Date'])
+        fig = px.line(dp, x='Date', y=f'{ticker}',
+                      labels={'x': 'Дата',
+                              f'{ticker}': 'Цена'})
+
+
+    fig.update_layout(
+        title=f"{ticker} Цена акций с течением времени",
+        xaxis_title="Дата",
+        yaxis_title="Цена",
+    )
+
+    if filename is None:
+        if period is None:
+            filename = f"{ticker}_{start_date.date()}_{end_date.date()}_stock_price_chart.html"
+        else:
+            filename = f"{ticker}_{period}_stock_price_chart.html"
+
+    fig.write_html(filename)
+    print(f"Интерактивный график сохранен как {filename}")
+
 
 
 def create_and_save_rsi_plot(data, style, ticker, period, start_date, end_date, filename=None):
