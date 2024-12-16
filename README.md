@@ -9,3 +9,32 @@
 *   Получать исторические данные об акциях.
 *   Проводить базовый анализ данных (например, расчет скользящих средних, волатильности и т.д.).
 *   Визуализировать полученные данные в виде интерактивных графиков.
+
+## Используемые технологии
+
+*   **yfinance:** Для получения исторических данных об акциях с Yahoo Finance.
+*   **pandas:** Для обработки, анализа и манипуляций с данными в формате DataFrame.
+*   **plotly:** Для создания интерактивных графиков и визуализаций.
+
+## Установка
+
+1.  **Клонируйте репозиторий:**
+
+    ```bash
+    git clone https://github.com/miwkom/Project-for-analyzing-and-visualizing-stock-data.git
+    cd Project-for-analyzing-and-visualizing-stock-data
+    ```
+
+2.  **Создайте и активируйте виртуальное окружение (рекомендуется):**
+
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # Для Linux/macOS
+    # venv\Scripts\activate  Для Windows
+    ```
+
+3.  **Установите необходимые зависимости:**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
