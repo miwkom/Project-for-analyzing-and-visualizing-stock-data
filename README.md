@@ -39,4 +39,5 @@
     pip install -r requirements.txt
     ```
 
-![Пример работы](https://github.com/user-attachments/assets/5d654cd7-f66e-4077-9ba9-724d74f8508d)
+![Пример работы](https://github.com/user-attachments/assets/5d654cd7-f66e-4077-9ba9-724d74f8508d)![AAPL_1mo_stock_price_chart](https://github.com/user-attachments/assets/f11b014c-3266-4b30-9bd3-044b84117fa1)
+
