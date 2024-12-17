@@ -38,3 +38,5 @@
     ```bash
     pip install -r requirements.txt
     ```
+
+![Пример работы](https://github.com/user-attachments/assets/5d654cd7-f66e-4077-9ba9-724d74f8508d)
